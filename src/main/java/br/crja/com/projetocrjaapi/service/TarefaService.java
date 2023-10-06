@@ -36,9 +36,9 @@ public class TarefaService implements ServiceAPI<Tarefa> {
 
     @Override
     public Tarefa salvar(Tarefa tarefa) {
-        int ordem = this.repository.findByMaxId();
+        Integer ordem = this.repository.findByMaxId();
 
-        if (ordem == 0) {
+        if (Objects.isNull(ordem)) {
             ordem = 1;
         } else {
             ordem += 1;
