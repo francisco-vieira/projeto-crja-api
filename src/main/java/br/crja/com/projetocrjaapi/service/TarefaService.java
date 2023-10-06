@@ -10,6 +10,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class TarefaService implements ServiceAPI<Tarefa> {
@@ -35,19 +36,19 @@ public class TarefaService implements ServiceAPI<Tarefa> {
 
     @Override
     public Tarefa salvar(Tarefa tarefa) {
-        var ordem = this.repository.findByMaxId();
+        int ordem = this.repository.findByMaxId();
 
-        if (Objects.isNull(ordem)) {
+        if (ordem == 0) {
             ordem = 1;
         } else {
             ordem += 1;
         }
 
-        var nome = this.repository.findByNomeTarefa(tarefa.getNomeTarefa());
-        var existe = nome.isPresent();
+        Optional<Tarefa> nome = this.repository.findByNomeTarefa(tarefa.getNomeTarefa());
+        boolean existe = nome.isPresent();
 
-        if(Objects.nonNull(tarefa.getId())) {
-            var rs = this.repository.findById(tarefa.getId()).orElse(null);
+        if (Objects.nonNull(tarefa.getId())) {
+            Tarefa rs = this.repository.findById(tarefa.getId()).orElse(null);
             if (Objects.nonNull(rs)) {
                 tarefa.setId(rs.getId());
                 tarefa.setOrdemApresentacao(rs.getOrdemApresentacao());
@@ -55,18 +56,13 @@ public class TarefaService implements ServiceAPI<Tarefa> {
                 if (existe && !Objects.equals(nome.get().getId(), tarefa.getId())) {
                     throw new ResponseStatusException(HttpStatus.CONFLICT, "Tarefa já existe");
                 }
-            }else {
+            } else {
                 tarefa.setOrdemApresentacao(ordem);
                 if (existe) {
                     throw new ResponseStatusException(HttpStatus.CONFLICT, "Tarefa já existe");
                 }
             }
         }
-
-
-
-
-
 
 
         return this.repository.save(tarefa);

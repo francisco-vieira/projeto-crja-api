@@ -1,20 +1,14 @@
 plugins {
 	java
-	id("org.springframework.boot") version "3.1.4"
-	id("io.spring.dependency-management") version "1.1.3"
+	id("org.springframework.boot") version "2.7.16"
+	id("io.spring.dependency-management") version "1.0.15.RELEASE"
 }
 
 group = "br.crja.com"
 version = "0.0.1-SNAPSHOT"
 
 java {
-	sourceCompatibility = JavaVersion.VERSION_17
-}
-
-configurations {
-	compileOnly {
-		extendsFrom(configurations.annotationProcessor.get())
-	}
+	sourceCompatibility = JavaVersion.VERSION_1_8
 }
 
 repositories {

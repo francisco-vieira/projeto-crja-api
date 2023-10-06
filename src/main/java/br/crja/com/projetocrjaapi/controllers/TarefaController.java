@@ -26,21 +26,21 @@ public class TarefaController {
     @GetMapping("todos")
     @ResponseStatus(HttpStatus.FOUND)
     public ResponseEntity<List<Tarefa>> findAll() {
-        var list = this.service.findAll();
+        List<Tarefa> list = this.service.findAll();
         return ResponseEntity.ok(list);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.FOUND)
     public ResponseEntity<Tarefa> findById(@RequestParam("id") Long id) {
-        var entity = this.service.findById(id);
+        Tarefa entity = this.service.findById(id);
         return ResponseEntity.ok(entity);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Tarefa> post(@RequestBody Tarefa body) {
-        var entity = this.service.salvar(body);
+        Tarefa entity = this.service.salvar(body);
         return ResponseEntity.ok(entity);
     }
 
