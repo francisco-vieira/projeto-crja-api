@@ -9,6 +9,11 @@ version = "0.0.1-SNAPSHOT"
 
 java {
 	sourceCompatibility = JavaVersion.VERSION_1_8
+	manifest {
+		attributes(
+			mutableMapOf("Main-Class" to "br.crja.com.projeto-crja.CrjaApiApplication")
+		)
+	}
 }
 
 repositories {
