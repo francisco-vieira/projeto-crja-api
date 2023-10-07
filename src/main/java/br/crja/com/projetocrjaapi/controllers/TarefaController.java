@@ -39,8 +39,8 @@ public class TarefaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Tarefa> post(@RequestBody Tarefa body) {
-        Tarefa entity = this.service.salvar(body);
+    public ResponseEntity<Tarefa> post(@RequestBody Tarefa tarefa) {
+        Tarefa entity = this.service.salvar(tarefa);
         return ResponseEntity.ok(entity);
     }
 

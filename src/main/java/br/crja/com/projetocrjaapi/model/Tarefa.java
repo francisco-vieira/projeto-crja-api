@@ -17,7 +17,8 @@ import java.time.LocalDate;
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class Tarefa implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_tarefa_id")
+    @SequenceGenerator(name = "seq_tarefa_id", sequenceName = "sequence_tarefa")
     private Long id;
     @Column(nullable = false, unique = true)
     private String nomeTarefa;
