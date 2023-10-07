@@ -43,7 +43,7 @@ public class TarefaService implements ServiceAPI<Tarefa> {
         } else {
             ordem += 1;
         }
-
+        tarefa.setOrdemApresentacao(ordem);
         Optional<Tarefa> nome = this.repository.findByNomeTarefa(tarefa.getNomeTarefa());
         boolean existe = nome.isPresent();
 
@@ -52,12 +52,10 @@ public class TarefaService implements ServiceAPI<Tarefa> {
             if (Objects.nonNull(rs)) {
                 tarefa.setId(rs.getId());
                 tarefa.setOrdemApresentacao(rs.getOrdemApresentacao());
-                tarefa.setDataLimite(rs.getDataLimite());
                 if (existe && !Objects.equals(nome.get().getId(), tarefa.getId())) {
                     throw new ResponseStatusException(HttpStatus.CONFLICT, "Tarefa já existe");
                 }
             } else {
-                tarefa.setOrdemApresentacao(ordem);
                 if (existe) {
                     throw new ResponseStatusException(HttpStatus.CONFLICT, "Tarefa já existe");
                 }
