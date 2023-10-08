@@ -3,9 +3,12 @@ package br.crja.com.projetocrjaapi.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -22,8 +25,11 @@ public class Tarefa implements Serializable {
     private Long id;
     @Column(nullable = false, unique = true)
     private String nomeTarefa;
+    @Column(nullable = false)
     private BigDecimal custo;
     @JsonFormat(pattern = "dd/MM/yyyy")
+    @Column(nullable = false)
     private LocalDate dataLimite;
     private int ordemApresentacao;
+
 }

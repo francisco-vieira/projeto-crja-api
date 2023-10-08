@@ -2,16 +2,17 @@ package br.crja.com.projetocrjaapi.controllers;
 
 
 import br.crja.com.projetocrjaapi.model.Tarefa;
+import br.crja.com.projetocrjaapi.model.dto.TarefaDto;
 import br.crja.com.projetocrjaapi.service.TarefaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping(value = "/api/v1/tarefas")
 public class TarefaController {
 
@@ -39,8 +40,9 @@ public class TarefaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Tarefa> post(@RequestBody Tarefa tarefa) {
-        Tarefa entity = this.service.salvar(tarefa);
+    public ResponseEntity<Tarefa> post(@RequestBody @Valid TarefaDto dto) {
+        Tarefa o = this.service.convert(dto);
+        Tarefa entity = this.service.salvar(o);
         return ResponseEntity.ok(entity);
     }
 
