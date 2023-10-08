@@ -36,10 +36,10 @@ public class TarefaService implements ServiceAPI<Tarefa> {
     }
 
     @Override
-    public Tarefa salvar(Tarefa tarefa) throws APIException{
+    public Tarefa salvar(Tarefa tarefa) throws APIException {
         Integer ordem = this.repository.findByMaxId();
 
-        ordem = Objects.isNull(ordem) ? 1 : ordem + 1;
+        ordem = Objects.isNull(ordem) ? 0 : ordem + 1;
 
         tarefa.setOrdemApresentacao(ordem);
         Optional<Tarefa> opt = this.repository.findByNomeTarefa(tarefa.getNomeTarefa());
@@ -59,8 +59,8 @@ public class TarefaService implements ServiceAPI<Tarefa> {
 
         try {
             return this.repository.save(tarefa);
-        }catch (APIException e){
-            throw  new APIException(e.getStatus(), e.getMessage());
+        } catch (APIException e) {
+            throw new APIException(e.getStatus(), e.getMessage());
         }
     }
 
