@@ -47,7 +47,7 @@ public class TarefaController {
     }
 
     @PostMapping("ordem")
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Tarefa> post(@RequestParam("previousIndex") Integer previousIndex,
                                        @RequestParam("currentIndex") Integer currentIndex) {
          this.service.salvarOrdem(previousIndex, currentIndex);
