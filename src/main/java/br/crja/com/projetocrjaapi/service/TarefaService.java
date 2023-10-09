@@ -64,6 +64,10 @@ public class TarefaService implements ServiceAPI<Tarefa> {
 
     public void salvarOrdem(Integer previousIndex, Integer currentIndex) {
 
+        if(Objects.equals(previousIndex, currentIndex)){
+            return;
+        }
+
         List<Tarefa> tarefaList = this.repository
                 .findAllByOrdemApresentacaoIn(
                         Arrays.asList(previousIndex, currentIndex)
