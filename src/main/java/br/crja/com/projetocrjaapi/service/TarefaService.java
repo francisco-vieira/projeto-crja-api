@@ -30,7 +30,7 @@ public class TarefaService implements ServiceAPI<Tarefa> {
 
     @Override
     public List<Tarefa> findAll() {
-        return this.repository.findAll();
+        return this.repository.findAllByOrderByOrdemApresentacao();
     }
 
     @Override

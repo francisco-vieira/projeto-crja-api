@@ -13,8 +13,10 @@ import java.util.Optional;
 @Repository
 public interface TarefaRepository extends JpaRepository<Tarefa, Long> {
 
+    List<Tarefa> findAllByOrderByOrdemApresentacao();
 
     List<Tarefa> findAllByOrdemApresentacaoIn(Collection<Integer> listOrdem);
+
     Optional<Tarefa> findByNomeTarefa(String descricao);
 
     @Query(value = "SELECT MAX(ordem_apresentacao) FROM Tarefa f", nativeQuery = true)
