@@ -64,31 +64,18 @@ public class TarefaService implements ServiceAPI<Tarefa> {
 
     public void salvarOrdem(Integer previousIndex, Integer currentIndex) {
 
-        if(Objects.equals(previousIndex, currentIndex)){
+        if (Objects.equals(previousIndex, currentIndex)) {
             return;
         }
 
-        List<Tarefa> tarefaList = this.repository
-                .findAllByOrdemApresentacaoIn(
-                        Arrays.asList(previousIndex, currentIndex)
-                );
+        Tarefa previous = repository.findByOrdemApresentacao(previousIndex);
+        Tarefa current = repository.findByOrdemApresentacao(currentIndex);
 
-        List<Tarefa> aux = new ArrayList<>();
-        Optional<Tarefa> currennt = tarefaList.stream().filter(f -> f.getOrdemApresentacao().equals(currentIndex)).findFirst();
-        if (currennt.isPresent()) {
-            Tarefa c = currennt.get();
-            c.setOrdemApresentacao(previousIndex);
-            aux.add(c);
-        }
+        previous.setOrdemApresentacao(currentIndex);
+        current.setOrdemApresentacao(previousIndex);
 
-        Optional<Tarefa> previous = tarefaList.stream().filter(f -> f.getOrdemApresentacao().equals(previousIndex)).findFirst();
-        if (previous.isPresent()) {
-            Tarefa c = previous.get();
-            c.setOrdemApresentacao(currentIndex);
-            aux.add(c);
-        }
 
-        this.repository.saveAll(aux);
+        this.repository.saveAll(Arrays.asList(previous, current));
     }
 
     private void existe(boolean existe, String nomeTarefa) {

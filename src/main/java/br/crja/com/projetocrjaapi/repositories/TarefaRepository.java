@@ -14,6 +14,7 @@ import java.util.Optional;
 public interface TarefaRepository extends JpaRepository<Tarefa, Long> {
 
     List<Tarefa> findAllByOrderByOrdemApresentacao();
+    Tarefa findByOrdemApresentacao(int ordem);
 
     List<Tarefa> findAllByOrdemApresentacaoIn(Collection<Integer> listOrdem);
 
