@@ -30,6 +30,6 @@ public class Tarefa implements Serializable {
     @JsonFormat(pattern = "dd/MM/yyyy")
     @Column(nullable = false)
     private LocalDate dataLimite;
-    private int ordemApresentacao;
+    private Integer ordemApresentacao;
 
 }

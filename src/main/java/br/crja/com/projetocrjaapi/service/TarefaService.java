@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class TarefaService implements ServiceAPI<Tarefa> {
@@ -62,6 +60,31 @@ public class TarefaService implements ServiceAPI<Tarefa> {
         } catch (APIException e) {
             throw new APIException(e.getStatus(), e.getMessage());
         }
+    }
+
+    public void salvarOrdem(Integer previousIndex, Integer currentIndex) {
+
+        List<Tarefa> tarefaList = this.repository
+                .findAllByOrdemApresentacaoIn(
+                        Arrays.asList(previousIndex, currentIndex)
+                );
+
+        List<Tarefa> aux = new ArrayList<>();
+        Optional<Tarefa> currennt = tarefaList.stream().filter(f -> f.getOrdemApresentacao().equals(previousIndex)).findFirst();
+        if (currennt.isPresent()) {
+            Tarefa c = currennt.get();
+            c.setOrdemApresentacao(currentIndex);
+            aux.add(c);
+        }
+
+        Optional<Tarefa> previous = tarefaList.stream().filter(f -> f.getOrdemApresentacao().equals(currentIndex)).findFirst();
+        if (previous.isPresent()) {
+            Tarefa c = previous.get();
+            c.setOrdemApresentacao(previousIndex);
+            aux.add(c);
+        }
+
+        this.repository.saveAll(aux);
     }
 
     private void existe(boolean existe, String nomeTarefa) {

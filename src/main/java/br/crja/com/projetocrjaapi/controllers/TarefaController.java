@@ -46,6 +46,14 @@ public class TarefaController {
         return ResponseEntity.ok(entity);
     }
 
+    @PostMapping("ordem")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Tarefa> post(@RequestParam("previousIndex") Integer previousIndex,
+                                       @RequestParam("currentIndex") Integer currentIndex) {
+         this.service.salvarOrdem(previousIndex, currentIndex);
+        return ResponseEntity.noContent().build();
+    }
+
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> delete(@RequestParam("id") Long id) {
