@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -35,6 +36,11 @@ public class TarefaService implements ServiceAPI<Tarefa> {
 
     @Override
     public Tarefa salvar(Tarefa tarefa) throws APIException {
+
+        if(tarefa.getDataLimite().isBefore(LocalDate.now())){
+            throw new APIException(HttpStatus.NOT_ACCEPTABLE, "Data inválida");
+        }
+
         Integer ordem = this.repository.findByMaxId();
 
         ordem = Objects.isNull(ordem) ? 0 : ordem + 1;
