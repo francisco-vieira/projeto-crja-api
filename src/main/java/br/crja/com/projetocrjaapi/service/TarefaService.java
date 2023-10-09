@@ -70,17 +70,17 @@ public class TarefaService implements ServiceAPI<Tarefa> {
                 );
 
         List<Tarefa> aux = new ArrayList<>();
-        Optional<Tarefa> currennt = tarefaList.stream().filter(f -> f.getOrdemApresentacao().equals(previousIndex)).findFirst();
+        Optional<Tarefa> currennt = tarefaList.stream().filter(f -> f.getOrdemApresentacao().equals(currentIndex)).findFirst();
         if (currennt.isPresent()) {
             Tarefa c = currennt.get();
-            c.setOrdemApresentacao(currentIndex);
+            c.setOrdemApresentacao(previousIndex);
             aux.add(c);
         }
 
-        Optional<Tarefa> previous = tarefaList.stream().filter(f -> f.getOrdemApresentacao().equals(currentIndex)).findFirst();
+        Optional<Tarefa> previous = tarefaList.stream().filter(f -> f.getOrdemApresentacao().equals(previousIndex)).findFirst();
         if (previous.isPresent()) {
             Tarefa c = previous.get();
-            c.setOrdemApresentacao(previousIndex);
+            c.setOrdemApresentacao(currentIndex);
             aux.add(c);
         }
 
