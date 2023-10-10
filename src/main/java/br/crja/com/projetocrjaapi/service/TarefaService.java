@@ -2,9 +2,11 @@ package br.crja.com.projetocrjaapi.service;
 
 import br.crja.com.projetocrjaapi.model.Tarefa;
 import br.crja.com.projetocrjaapi.model.dto.TarefaDto;
+import br.crja.com.projetocrjaapi.model.enums.ELanguage;
 import br.crja.com.projetocrjaapi.model.exception.APIException;
 import br.crja.com.projetocrjaapi.repositories.TarefaRepository;
 import br.crja.com.projetocrjaapi.service.ipack.ServiceAPI;
+import br.crja.com.projetocrjaapi.utils.MessageUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,7 @@ import java.util.*;
 public class TarefaService implements ServiceAPI<Tarefa> {
 
     private final TarefaRepository repository;
+    private final MessageUtils messageUtils = MessageUtils.getInstance(ELanguage.PORTUGUESE);
 
     @Autowired
     public TarefaService(TarefaRepository repository) {
@@ -26,7 +29,7 @@ public class TarefaService implements ServiceAPI<Tarefa> {
     @Override
     public Tarefa findById(Long id) {
         return this.repository.findById(id)
-                .orElseThrow(() -> new APIException(HttpStatus.NOT_FOUND, "Tarefa não encontrada!"));
+                .orElseThrow(() -> new APIException(HttpStatus.NOT_FOUND, messageUtils.message("not-found")));
     }
 
     @Override
@@ -38,7 +41,7 @@ public class TarefaService implements ServiceAPI<Tarefa> {
     public Tarefa salvar(Tarefa tarefa) throws APIException {
 
         if(tarefa.getDataLimite().isBefore(LocalDate.now())){
-            throw new APIException(HttpStatus.NOT_ACCEPTABLE, "Data inválida");
+            throw new APIException(HttpStatus.NOT_ACCEPTABLE, messageUtils.message("invalid-date"));
         }
 
         Integer ordem = this.repository.findByMaxId();
@@ -86,7 +89,8 @@ public class TarefaService implements ServiceAPI<Tarefa> {
 
     private void existe(boolean existe, String nomeTarefa) {
         if (existe) {
-            throw new APIException(HttpStatus.CONFLICT, "Tarefa ".concat(nomeTarefa).concat(" já existe"));
+            throw new APIException(HttpStatus.CONFLICT,
+                    "Tarefa ".concat(nomeTarefa).concat(messageUtils.message("exists")));
         }
     }
 

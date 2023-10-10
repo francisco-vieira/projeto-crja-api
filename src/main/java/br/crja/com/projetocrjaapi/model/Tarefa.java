@@ -3,12 +3,9 @@ package br.crja.com.projetocrjaapi.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
+import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -20,8 +17,8 @@ import java.time.LocalDate;
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class Tarefa implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_tarefa_id")
-    @SequenceGenerator(name = "seq_tarefa_id", sequenceName = "sequence_tarefa")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "serial")
     private Long id;
     @Column(nullable = false, unique = true)
     private String nomeTarefa;

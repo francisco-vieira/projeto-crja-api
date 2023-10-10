@@ -7,7 +7,6 @@ import org.springframework.web.server.ResponseStatusException;
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class APIException extends ResponseStatusException {
 
-
     public APIException(HttpStatus status) {
         super(status);
     }
