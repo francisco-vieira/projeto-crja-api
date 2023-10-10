@@ -36,14 +36,14 @@ public class MessageUtils {
     private String ptBR(String key) {
         lang.put("not-found", "não encontrado");
         lang.put("invalid-date", "data inválida");
-        lang.put("exists", "já existe");
+        lang.put("exists", " já existe");
         return lang.get(key);
     }
 
     private String en(String key) {
         lang.put("not-found", "not found");
         lang.put("invalid-date", "Invalid date");
-        lang.put("exists", "already exists");
+        lang.put("exists", " already exists");
         return lang.get(key);
     }
 
