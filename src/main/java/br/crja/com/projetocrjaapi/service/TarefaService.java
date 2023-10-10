@@ -56,11 +56,11 @@ public class TarefaService implements ServiceAPI<Tarefa> {
             long id = tarefa.getId() == null ? 0 : tarefa.getId();
             Tarefa rs = this.repository.findById(id).orElse(null);
             if (Objects.nonNull(rs)) {
-                this.existe(existe && !Objects.equals(opt.get().getId(), tarefa.getId()), tarefa.getNomeTarefa());
+                this.existe(existe && !Objects.equals(opt.get().getId(), tarefa.getId()));
                 tarefa.setId(rs.getId());
                 tarefa.setOrdemApresentacao(rs.getOrdemApresentacao());
             } else {
-                this.existe(existe, tarefa.getNomeTarefa());
+                this.existe(existe);
             }
         }
 
@@ -87,10 +87,9 @@ public class TarefaService implements ServiceAPI<Tarefa> {
         this.repository.saveAll(Arrays.asList(previous, current));
     }
 
-    private void existe(boolean existe, String nomeTarefa) {
+    private void existe(boolean existe) {
         if (existe) {
-            throw new APIException(HttpStatus.CONFLICT,
-                    "Tarefa ".concat(nomeTarefa).concat(messageUtils.message("exists")));
+            throw new APIException(HttpStatus.CONFLICT, messageUtils.message("exists"));
         }
     }
 
